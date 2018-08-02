@@ -1,0 +1,62 @@
+<head>
+  <title> About Thorn | NYC Punk Shop - Brooklyn</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <link href="{{ theme | theme_css_url }}" media="screen" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div class="slideshow-container">
+<div class="mySlides fade">
+  <div class="numbertext">1 / 2</div>
+  <img src="https://cdn.pbrd.co/images/Hw07VlR.jpg" style="width:100%">
+  <div class="text"></div>
+</div>
+<div class="mySlides fade">
+  <div class="numbertext">2 / 2</div>
+  <img src="https://cdn.pbrd.co/images/Hw9CiSu.jpg" style="width:100%">
+  <div class="text"></div>
+</div>
+<br>
+<div style="text-align:center">
+  <span class="dot" onclick="currentSlide(1)"></span> 
+  <span class="dot" onclick="currentSlide(2)"></span> 
+</div>
+<script>
+var slideIndex = 0;
+showSlides();
+function showSlides() {
+    var i;
+    var slides = document.getElementsByClassName("mySlides");
+    var dots = document.getElementsByClassName("dot");
+    for (i = 0; i < slides.length; i++) {
+       slides[i].style.display = "none";  
+    }
+    slideIndex++;
+    if (slideIndex > slides.length) {slideIndex = 1}    
+    for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+    }
+    slides[slideIndex-1].style.display = "block";  
+    dots[slideIndex-1].className += " active";
+    setTimeout(showSlides, 2000); // Change image every 2 seconds
+}
+</script>
+  
+  <div class="center-text">
+    <div class="about-container">
+      <a name="about">
+        <h1>New York City's Premiere Punk Shop</h1>
+  <!--Paragraph Number One-->
+        <p style="font-size:150%;">Opened in 2015 previously as Ignore Rock and Roll Heroes Brooklyn store front, Now called Thorn. We specialize in all your Occult, Leather & Hardcore Punk needs! Striving to represent and carry original Art, Music and leather goods made within the worlds Hardcore Punk community, as well as vintage and rare items of all kinds. Leaning towards the dark, unusual and taboo, Thorn is actively working to archive and share rare ephemera representing underground culture from the past and present. </p>
+
+<p style="font-size:150%;">Run and owned by New York native Gabrielle Edelman. Located in the heart of Bushwick's punk alley alongside Artist Sam Ryser's shop Dripper World & Tattoo Artist Sully Sullivan's shop Street Fever. Punk Alley has become an internationally known hot spot for all things underground, representing NYC'S diverse, creative and subversive community.</p>
+
+ <p style="font-size:150%;">Gabby has been involved in the New York City punk scene for the past 15 years and continues to find loving support and inspiration within it. With Thorn she strives to provide a space for her comrades & their artistic aesthetic within a world that has shunned outsiders, forcing them into the underground. Encouraging D.I.Y. sentiments and for individuals to feel comfortable being themselves, Thorn is space where outsiders can connect.</p>
+
+ <p style="font-size:150%;">Feel free to <a href="http://www.thornpunkshop.com/contact">contact us</a> as we are open to buy, sell and trade with anyone interested!</p></p>
+
+        <img src="https://cdn.pbrd.co/images/HvZThtx.png" title="thorn" alt="thorn" class="centerThorn"/>
+      </div>
+
+</body> 

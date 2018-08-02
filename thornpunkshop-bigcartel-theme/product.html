@@ -1,0 +1,75 @@
+{% if product.previous_product or product.next_product %}
+  <ul class="previous_next">
+    {% if product.previous_product %}
+      <li class="previous_product"><a href="{{ product.previous_product.url }}" title="View Previous Product"><svg viewBox="0 0 20 20"><path class="st0" d="M10 14.5L3 6.8l1.4-1.3 5.6 6.1 5.6-6.1L17 6.8"/></svg> <span>Previous</span></a></li>
+    {% endif %}
+    {% if product.next_product %}
+      <li class="next_product"><a href="{{ product.next_product.url }}" title="View Next Product"><span>Next</span> <svg viewBox="0 0 20 20"><path class="st0" d="M10 14.5L3 6.8l1.4-1.3 5.6 6.1 5.6-6.1L17 6.8"/></svg></a></li>
+    {% endif %}
+  </ul>
+{% endif %}
+<div class="product_images">
+  <img src="{{ product.image | product_image_url | constrain: 1200 }}" alt="Image of {{ product.name | escape }}" class="primary_image">
+  {% if product.images.size > 1 %}
+    <ul class="product_thumbnails">
+      {% for image in product.images %}
+        <li{% if forloop.index == 1 %} class="active"{% endif %}><a href="{{ image | product_image_url | constrain: 1200 }}"><img src="{{ image | product_image_url | constrain: 300 }}" alt="Image of {{ product.name | escape }}"></a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</div>
+
+<div class="product_detail">
+  <h1>{{ product.name }}</h1>
+  <h2>
+    <span class="product_price">{{ product.default_price | money: theme.money_format }}</span>
+		{% case product.status %}
+			{% when 'active' %}
+				{% if product.on_sale %}<span class="small_status {{ product.css_class }}">- On sale</span>{% endif %}
+			{% when 'sold-out' %}
+				<span class="small_status {{ product.css_class }}">- Sold out</span>
+			{% when 'coming-soon' %}
+				<span class="small_status {{ product.css_class }}">- Coming soon</span>
+		{% endcase %}
+  </h2>
+  
+	{% if product.status == 'active' %}
+    <form method="post" action="/cart" class="product_form">
+      {% if product.has_default_option %}
+        {{ product.option | hidden_option_input }}
+      {% else %}
+        <div class="select">
+          <select id="option" name="[cart][add][id]">
+            {% for option in product.options %}
+              <option value="{{ option.id }}" data-option-price="{{ option.price }}"{% if option.sold_out %} disabled="disabled"{% endif %}>{{ option.name }}{% if option.price != product.default_price %} - {{ option.price | money: theme.money_format }}{% endif %} {% if option.sold_out %}(Sold out){% endif %}</option>
+            {% endfor %}
+          </select>
+          <svg viewBox="0 0 15 7.6" enable-background="new 0 0 15 7.6"><path d="M15 1.1l-7.5 6.5-7.5-6.3 1-1.2 6.5 5.5 6.5-5.6z"/></svg>
+        </div>
+      {% endif %}
+      <input autocomplete="off" type="text" value="1" id="quantity">
+      <button class="button add-to-cart" type="submit" data-added-text="Added!" data-adding-text="Adding...">
+        <span class="status_text">Add to bag</span>
+      </button>
+    </form>
+	{% endif %}
+  
+	<div class="product_description">
+		{% if product.description != blank %}
+			{{ product.description | paragraphs }}
+		{% endif %}
+	</div>
+  <ul class="share_buttons">
+    <li class="social_twitter">
+      <a title="Tweet" href="http://twitter.com/home?status={{product.name}}%20-%20{{store.name}}%20{{store.url}}{{product.url}}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=no,scrollbars=no,height=400,width=600');return false;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"><path d="M25.4 6.5c-.9.5-1.8.9-2.9 1.1-.8-.9-2-1.4-3.3-1.4-2.5 0-4.5 2-4.5 4.4 0 .3 0 .7.1 1-3.8-.2-7.1-2-9.3-4.6-.4.7-.6 1.4-.6 2.3 0 1.5.8 2.9 2 3.7-.7 0-1.4-.2-2-.6v.1c0 2.1 1.6 3.9 3.6 4.4-.4 0-.8.1-1.2.1-.3 0-.6 0-.8-.1.6 1.8 2.2 3 4.2 3.1-1.5 1.2-3.5 1.9-5.6 1.9-.4 0-.7 0-1.1-.1 2 1.3 4.4 2 6.9 2 8.3 0 12.8-6.8 12.8-12.6v-.6c.9-.6 1.6-1.4 2.3-2.3-.8.4-1.7.6-2.6.7.9-.6 1.7-1.4 2-2.5z"/></svg>
+      </a>
+    </li>
+    <li class="social_facebook">
+      <a title="Share on Facebook" href="https://www.facebook.com/sharer/sharer.php?u={{store.url}}{{product.url}}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=no,scrollbars=no,height=400,width=600');return false;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"><path d="M23.9 5H6.1C5.5 5 5 5.5 5 6.1v17.7c0 .7.5 1.2 1.1 1.2h9.5v-7.7H13v-3h2.6V12c0-2.6 1.6-4 3.9-4 1.1 0 2 .1 2.3.1v2.7h-1.6c-1.2 0-1.5.6-1.5 1.5v1.9h3l-.4 3h-2.6V25h5.1c.6 0 1.1-.5 1.1-1.1V6.1c.1-.6-.4-1.1-1-1.1z"/></svg></a>
+    </li>
+    <li class="social_pinterest">
+      <a title="Pin" data-pin-custom="true" data-pin-do="buttonPin" href="https://www.pinterest.com/pin/create/button/?url={{ page.full_url }}&media={{ product.images.first.url }}&description={{ product.description | escape | truncate: 200 }}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"><path d="M15 25c-1 0-2-.2-3-.4.4-.7 1-1.8 1.2-2.6.1-.5.6-2.4.6-2.4.3.6 1.3 1.1 2.3 1.1 3 0 5.2-2.8 5.2-6.2 0-3.3-2.7-5.8-6.2-5.8-4.3 0-6.6 2.9-6.6 6.1 0 1.5.8 3.3 2 3.9.2.1.3 0 .3-.1s.2-.8.3-1.1c0-.1 0-.2-.1-.3-.4-.5-.7-1.4-.7-2.3 0-2.2 1.7-4.3 4.5-4.3 2.5 0 4.2 1.7 4.2 4.1 0 2.7-1.4 4.6-3.1 4.6-1 0-1.7-.8-1.5-1.8.3-1.2.8-2.5.8-3.3 0-.8-.4-1.4-1.3-1.4-1 0-1.8 1-1.8 2.4 0 .9.3 1.5.3 1.5s-1 4.2-1.2 5c-.2.9-.1 2.1 0 2.9C7.6 22.9 5 19.2 5 15 5 9.5 9.5 5 15 5s10 4.5 10 10-4.5 10-10 10z"/><path d="M15 5C9.5 5 5 9.5 5 15c0 4.2 2.6 7.9 6.4 9.3-.1-.8-.2-2 0-2.9.2-.8 1.2-5 1.2-5s-.3-.6-.3-1.5c0-1.4.8-2.4 1.8-2.4.9 0 1.3.6 1.3 1.4 0 .9-.5 2.1-.8 3.3-.2 1 .5 1.8 1.5 1.8 1.8 0 3.1-1.9 3.1-4.6 0-2.4-1.7-4.1-4.2-4.1-2.8 0-4.5 2.1-4.5 4.3 0 .9.3 1.8.7 2.3.1.1.1.2.1.3-.1.3-.2 1-.3 1.1 0 .2-.1.2-.3.1-1.2-.6-2-2.4-2-3.9 0-3.2 2.3-6.1 6.6-6.1 3.5 0 6.2 2.5 6.2 5.8 0 3.4-2.2 6.2-5.2 6.2-1 0-2-.5-2.3-1.1 0 0-.5 1.9-.6 2.4-.2.9-.8 2-1.2 2.6.8.5 1.8.7 2.8.7 5.5 0 10-4.5 10-10S20.5 5 15 5z"/></svg>
+      </a>
+    </li>
+  </ul>
+</div>

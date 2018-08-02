@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Thorn | NYC Punk Shop | Brooklyn</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <link href="{{ theme | theme_css_url }}" media="screen" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Work+Sans|Karla' rel='stylesheet' type='text/css'>
+  {{ head_content }}
+  <link href="https://cdn.pbrd.co/images/HvYbv86.png" rel="icon" type="image/png">
+</head>
+<body id="{{ page.permalink }}" class="{{ page.category }}{% if page.permalink == 'home' %}{% if theme.images.welcome_image or theme.welcome_text != blank %} has_welcome{% endif %}{% endif %}">
+  <header class="header">
+    <div class="store_name {% if theme.header_logo != blank %}image{% else %}text{% endif %}">
+      <a href="/" title="{{ store.name | escape }}">
+        {% if theme.header_logo != blank %}
+          <img src="{{ theme.header_logo.url | constrain: '800', '120' }}" alt="{{ store.name }}">
+        {% else %}
+          {{ store.name }}
+        {% endif %}
+      </a>
+    </div>
+    <ul class="header_icons">
+      {% if theme.show_search %}<li class="open_search"><a href="#"><svg viewBox="0 0 30 30"><path d="M26.1 24.7l-5.9-5.9c1.3-1.6 2-3.6 2-5.8 0-5.1-4.1-9.2-9.2-9.2S3.9 8 3.9 13.1s4.1 9.2 9.2 9.2c2.2 0 4.2-.8 5.8-2l5.9 5.9 1.3-1.5zM5.9 13.1c0-4 3.2-7.2 7.2-7.2s7.2 3.2 7.2 7.2-3.2 7.2-7.2 7.2-7.2-3.2-7.2-7.2z"/></svg></a></li>{% endif %}
+      <li class="open_cart" ><a href="#"><svg viewBox="0 0 30 30"><path d="M22.7 8c-.9-3.4-4-6-7.7-6S8.2 4.6 7.3 8H2l3 20h20l3-20h-5.3zM15 4c2.6 0 4.8 1.7 5.6 4H9.3c.9-2.3 3.1-4 5.7-4zm8.3 22H6.7L4.3 10H7v3h2v-3h12v3h2v-3h2.7l-2.4 16z"/></svg><span class="cart_count"><span class="cart_value"{% if cart.item_count == 0 %} style="display:none;"{% endif %}>{{ cart.item_count }}</span></span></a></li>
+      <li class="open_menu"><a href="#" title="Menu"><span></span><span></span><span></span><span></span></a></li>
+    </ul>
+  </header>
+  {% if page.permalink == 'home' %}
+    {% if theme.images.welcome_image or theme.welcome_text != blank %}
+      <div class="welcome_image">
+        <div class="welcome_overlay"></div>
+          <div class="welcome_text">
+            {% if theme.welcome_text != blank %}<h1>{{ theme.welcome_text }}</h1>{% endif %}
+            <a href="/products" class="welcome_button">Start shopping</a>
+          </div>
+      </div>
+    {% endif %}
+  {% endif %}
+  <section class="content page-{{ page.permalink }} {{ page.category }}{% if theme.images.welcome_image or theme.welcome_text != blank %} has_welcome{% endif %}">
+    {% if page.category == 'custom' %}
+      <h1>{{ page.name }}</h1>
+      <div class="custom_page">{{ page_content | paragraphs }}</div>
+    {% else %}
+      {{ page_content }}
+    {% endif %}
+  </section>
+
+<!----googlemaps---->
+<div id="map"></div>
+    <script>
+// Initialize and add the map
+function initMap() {
+  // The location of Uluru
+  var uluru = {lat: 40.6985256, lng: -73.9379776}; 
+  // The map, centered at Uluru
+  var map = new google.maps.Map(
+      document.getElementById('map'), {zoom: 16.4, center: uluru});
+  // The marker, positioned at Uluru
+  var marker = new google.maps.Marker({position: uluru, map: map});
+}
+    </script>
+    <!--Load the API from the specified URL
+    * The async attribute allows the browser to render the page while the API loads
+    * The key parameter will contain your own API key (which is not needed for this tutorial)
+    * The callback parameter executes the initMap() function
+    -->
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxDL4XrYOX3_MkzlB21IrseZ1IlVW1Y4c&callback=initMap">
+    </script>
+<!---googlemap--->
+    
+  <footer class="footer">
+    {% if theme.twitter_url != blank or theme.facebook_url != blank or theme.instagram_url != blank or theme.tumblr_url != blank or theme.pinterest_url != blank %}
+      <ul class="footer_icons">
+        {% if theme.instagram_url != blank %}
+          <li><a title="Instagram" href="{{ theme.instagram_url }}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"><path d="M22.7 5H7.3C6 5 5 6 5 7.3v15.4C5 24 6 25 7.3 25h15.4c1.3 0 2.3-1 2.3-2.3V7.3C25 6 24 5 22.7 5zM15 11.2c2.1 0 3.8 1.7 3.8 3.8 0 2.1-1.7 3.8-3.8 3.8-2.1 0-3.8-1.7-3.8-3.8 0-2.1 1.7-3.8 3.8-3.8zm7.7 10.7c0 .4-.3.8-.8.8H8.1c-.4 0-.8-.3-.8-.8v-8.5H9c-.1.5-.2 1-.2 1.5 0 3.4 2.8 6.2 6.2 6.2 3.4 0 6.2-2.8 6.2-6.2 0-.5-.1-1-.2-1.5h1.7v8.5zm0-11.5c0 .4-.3.8-.8.8h-2.3c-.4 0-.8-.3-.8-.8V8.1c0-.4.3-.8.8-.8h2.3c.4 0 .8.3.8.8v2.3z"/></svg></a></li>
+        {% endif %}
+        
+        {% if theme.twitter_url != blank %}
+          <li><a title="Twitter" href="{{ theme.twitter_url }}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"><path d="M25.4 6.5c-.9.5-1.8.9-2.9 1.1-.8-.9-2-1.4-3.3-1.4-2.5 0-4.5 2-4.5 4.4 0 .3 0 .7.1 1-3.8-.2-7.1-2-9.3-4.6-.4.7-.6 1.4-.6 2.3 0 1.5.8 2.9 2 3.7-.7 0-1.4-.2-2-.6v.1c0 2.1 1.6 3.9 3.6 4.4-.4 0-.8.1-1.2.1-.3 0-.6 0-.8-.1.6 1.8 2.2 3 4.2 3.1-1.5 1.2-3.5 1.9-5.6 1.9-.4 0-.7 0-1.1-.1 2 1.3 4.4 2 6.9 2 8.3 0 12.8-6.8 12.8-12.6v-.6c.9-.6 1.6-1.4 2.3-2.3-.8.4-1.7.6-2.6.7.9-.6 1.7-1.4 2-2.5z"/></svg></a></li>
+        {% endif %}
+
+        {% if theme.facebook_url != blank %}
+          <li><a title="Facebook" href="{{ theme.facebook_url }}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"><path d="M23.9 5H6.1C5.5 5 5 5.5 5 6.1v17.7c0 .7.5 1.2 1.1 1.2h9.5v-7.7H13v-3h2.6V12c0-2.6 1.6-4 3.9-4 1.1 0 2 .1 2.3.1v2.7h-1.6c-1.2 0-1.5.6-1.5 1.5v1.9h3l-.4 3h-2.6V25h5.1c.6 0 1.1-.5 1.1-1.1V6.1c.1-.6-.4-1.1-1-1.1z"/></svg></a></li>
+        {% endif %}
+
+        {% if theme.pinterest_url != blank %}
+          <li><a title="Pinterest" href="{{ theme.pinterest_url }}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"><path d="M15 25c-1 0-2-.2-3-.4.4-.7 1-1.8 1.2-2.6.1-.5.6-2.4.6-2.4.3.6 1.3 1.1 2.3 1.1 3 0 5.2-2.8 5.2-6.2 0-3.3-2.7-5.8-6.2-5.8-4.3 0-6.6 2.9-6.6 6.1 0 1.5.8 3.3 2 3.9.2.1.3 0 .3-.1s.2-.8.3-1.1c0-.1 0-.2-.1-.3-.4-.5-.7-1.4-.7-2.3 0-2.2 1.7-4.3 4.5-4.3 2.5 0 4.2 1.7 4.2 4.1 0 2.7-1.4 4.6-3.1 4.6-1 0-1.7-.8-1.5-1.8.3-1.2.8-2.5.8-3.3 0-.8-.4-1.4-1.3-1.4-1 0-1.8 1-1.8 2.4 0 .9.3 1.5.3 1.5s-1 4.2-1.2 5c-.2.9-.1 2.1 0 2.9C7.6 22.9 5 19.2 5 15 5 9.5 9.5 5 15 5s10 4.5 10 10-4.5 10-10 10z"/><path d="M15 5C9.5 5 5 9.5 5 15c0 4.2 2.6 7.9 6.4 9.3-.1-.8-.2-2 0-2.9.2-.8 1.2-5 1.2-5s-.3-.6-.3-1.5c0-1.4.8-2.4 1.8-2.4.9 0 1.3.6 1.3 1.4 0 .9-.5 2.1-.8 3.3-.2 1 .5 1.8 1.5 1.8 1.8 0 3.1-1.9 3.1-4.6 0-2.4-1.7-4.1-4.2-4.1-2.8 0-4.5 2.1-4.5 4.3 0 .9.3 1.8.7 2.3.1.1.1.2.1.3-.1.3-.2 1-.3 1.1 0 .2-.1.2-.3.1-1.2-.6-2-2.4-2-3.9 0-3.2 2.3-6.1 6.6-6.1 3.5 0 6.2 2.5 6.2 5.8 0 3.4-2.2 6.2-5.2 6.2-1 0-2-.5-2.3-1.1 0 0-.5 1.9-.6 2.4-.2.9-.8 2-1.2 2.6.8.5 1.8.7 2.8.7 5.5 0 10-4.5 10-10S20.5 5 15 5z"/></svg></a></li>
+        {% endif %}  
+        {% if theme.tumblr_url != blank %}
+          <li><a title="Tumblr" href="{{ theme.tumblr_url }}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"><path d="M18.1 21.8c-.6 0-1.1-.1-1.5-.4-.3-.2-.6-.5-.7-.8-.1-.3-.2-1.1-.2-2.2v-5.1h4.7v-3.1h-4.7V5h-2.8c-.1 1-.4 1.9-.7 2.5-.3.7-.8 1.2-1.3 1.7-.6.5-1.2.8-2 1.1v2.8H11v7c0 .9.1 1.6.3 2.1.2.5.5.9 1 1.4.5.4 1.1.8 1.8 1 .7.2 1.5.3 2.4.3.8 0 1.6-.1 2.2-.2.7-.2 1.5-.4 2.3-.8v-3.1c-.9.6-1.9 1-2.9 1z"/></svg></a></li>
+        {% endif %}
+      </ul>
+    {% endif %}
+    <ul class="footer_pages">
+      {% if store.website != blank %}
+        <li><a href="{{ store.website }}">Back to site</a></li>
+      {% endif %}
+      {% for page in pages.all %}
+        <li>{{ page | link_to }}</li>
+      {% endfor %}
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+    <div class="footer_credit">
+      &copy; {{ 'Today' | date: '%Y' }} {{ store.name }}. <span class="credit">{{ bigcartel_credit }}</span>
+    </div>
+    
+       <p>Thorn</p>
+  <p>867 Broadway ave, Brooklyn, NY 11206<p>
+  <p>Contact email: <a href="mailto:thornpunknyc@gmail.com">thornpunknyc@gmail.com</a>.</p>   
+    
+  </footer>
+  <div class="overlay">
+    <div class="overlay_background"></div>
+    <div class="overlay_content">
+      <svg class="close_overlay" viewBox="0 0 17 17"><path d="M17 1.4L15.6 0 8.5 7.1 1.4 0 0 1.4l7.1 7.1L0 15.6 1.4 17l7.1-7.1 7.1 7.1 1.4-1.4-7.1-7.1z"/></svg>
+      <ul class="page_list">
+        <li><a href="/products">Shop</a></li>
+        {% for page in pages.all %}
+          <li>{{ page | link_to }}</li>
+        {% endfor %}
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+      {% if theme.show_search %}
+        <form action="/products" method="get" class="search_form">
+          <input type="text" name="search" id="search" placeholder="Search products...">
+        </form>
+      {% endif %}
+    </div>
+  </div>
+  <a class="footer_cart" href="/cart">
+    <div class="background"></div>
+    <span class="open_cart"><svg viewBox="0 0 30 30"><path d="M22.7 8c-.9-3.4-4-6-7.7-6S8.2 4.6 7.3 8H2l3 20h20l3-20h-5.3zM15 4c2.6 0 4.8 1.7 5.6 4H9.3c.9-2.3 3.1-4 5.7-4zm8.3 22H6.7L4.3 10H7v3h2v-3h12v3h2v-3h2.7l-2.4 16z"/></svg><span class="cart_count"><span class="cart_value"{% if cart.item_count == 0 %} style="display:none;"{% endif %}>{{ cart.item_count }}</span></span></span>
+  </a>
+  {% if page.permalink != 'cart' %}
+  <div class="mini_cart{% if cart.item_count == 0 %} empty{% endif %}">
+    <div class="triangle"></div>
+    <div class="cart_holder">
+      {% if cart.items != blank %}
+        <div class="item_holder">
+          {% for item in cart.items %}
+            <a class="cart_item" href="{{ item.product.url }}">
+              <img class="item_image" src="{{ item.product.image | product_image_url | constrain: 240, 240 }}" alt="Image of {{ item.product.name | escape }}">
+              <div class="item_info">
+                {{ item.product.name }}
+                {% unless item.product.has_default_option %}
+                  <span>{{ item.option.name }}</span>
+                {% endunless %}
+                <div class="item_price">{{ item.unit_price | money: theme.money_format }}</div>
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+        <div class="cart_footer">
+          <div class="item_subtotal">
+            Subtotal <span>{{ cart.total | money: theme.money_format }}</span>
+          </div>
+          <a class="button view_bag" href="/cart">View your bag</a>
+        </div>
+      {% else %}
+        <div>
+          Your bag is empty
+        </div>
+        <a class="button view_bag" href="/products">Start shopping</a>
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="{{ 'api' | theme_js_url }}"></script>
+  <script>
+    var formatMoney = Format.money;
+    Format.money = function(number) {
+      {% case theme.money_format %}
+      {% when 'sign' %}
+        return formatMoney(number, true, true, false);
+      {% when 'code' %}
+        return formatMoney(number, true, false, true);
+      {% when 'sign_and_code' %}
+        return formatMoney(number, true, true, true);
+      {% endcase %}
+    };
+  </script>
+  <script src="{{ theme | theme_js_url }}"></script>
+  {% if page.full_url contains '/product/' %}
+    <script async defer src="//assets.pinterest.com/js/pinit.js"></script>
+  {% endif %}
+</body>
+</html>
